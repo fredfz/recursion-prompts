@@ -146,7 +146,6 @@ var compareStr = function(str1, str2) {
    if ( str1[0] === str2[0]) {
    return compareStr(str1.slice(1), str2.slice(1));
    } else {return false}
-   return true;
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
@@ -212,7 +211,7 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
-  if ( obj === {}) {return 0}
+  if ( Object.keys(obj).length === 0) {return 0}
   var count = 0;
   for (var item in obj) {
     if (item === key) {count ++}
@@ -227,7 +226,7 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
-  if ( obj === {}) {return 0}
+  if ( Object.keys(obj).length === 0) {return 0}
   var count = 0;
   for (var item in obj) {
     if (obj[item] === value) {count ++}
@@ -240,11 +239,12 @@ var countValuesInObj = function(obj, value) {
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
-  if ( obj === {}) {return {}}
+  if ( Object.keys(obj).length === 0) {return {}}
   for (var item in obj) {
-    if (item === oldKey) {obj[newKey] = obj[item]; delete obj[item];
-    if (typeof(obj[newKey]) === 'object' && obj[newKey] !== null && !Array.isArray(obj[newKey]))
-    {replaceKeysInObj(obj[newKey], oldKey, newKey)}
+    if (item === oldKey) {
+      obj[newKey] = obj[item]; delete obj[item];
+      if (typeof(obj[newKey]) === 'object' && obj[newKey] !== null && !Array.isArray(obj[newKey]))
+      {replaceKeysInObj(obj[newKey], oldKey, newKey)}
     }
     if (typeof(obj[item]) === 'object' && obj[item] !== null && !Array.isArray(obj[item]))
     {replaceKeysInObj(obj[item], oldKey, newKey)}
@@ -304,7 +304,7 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
-   if (obj === {} ) { return 0}
+   if (Object.keys(obj).length === 0 ) { return 0}
    var sum = 0;
    for (var key in obj) {
      if (obj[key] % 2 === 0) {sum += obj[key]}
